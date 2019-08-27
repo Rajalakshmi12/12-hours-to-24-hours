@@ -1,0 +1,26 @@
+var openTime = '12/05/1990 12:00:00 AM';
+
+transformEntry(openTime);
+
+function transformEntry(source_openTime)
+{
+if(source_openTime!=''){
+		var srcDateTime1=source_openTime.toString();
+		var timearr1=srcDateTime1.split(' ');		
+		var gdt1 = new GlideDateTime();
+		gdt1.setDisplayValue(srcDateTime1,"MM/dd/yyyy HH:mm:ss a");		
+		if(srcDateTime1.indexOf('PM')>-1 && !(timearr1[1].startsWith("12"))){
+                        var gtime11 = new GlideTime();
+			gtime11.setValue("12:00:00");
+			gdt1.add(gtime11);
+		}
+		else if(srcDateTime1.indexOf('AM')>-1 && (timearr1[1].startsWith("12"))){
+                        var gtime21 = new GlideTime();
+			gtime21.setValue("12:00:00");
+			gdt1.subtract(gtime21);
+		}
+		//gs.info('Open Time :'+source.u_open_time+' GDT Time :'+gdt1.getDisplayValueWithoutTZ());
+		gs.info(gdt1.getDisplayValueWithoutTZ());
+	}
+	
+}
